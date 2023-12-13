@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+<main class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h1 class="text-center display-4 my-2" style="line-height: .7">TAREAS{% if tipo_despliegue == 'P' %} PENDIENTES {% else %} COMPLETADAS {% endif %}
+                <span style="font-size: 50%; font-weight:600">(Del usuario actual)</span>
+            </h1>
+
+            <ul class="list-group mt-4">
+                {% for task in tasks %}
+                <a href="{% url 'task_detail' task.id %}" class="list-group-item">
+                    <header class="d-flex justify-content-between">
+                        <h3>{{task.title}} {% if task.important %}<span style="font-size: 175%">&#x2191;</span>{% endif %}
+                            {% if tipo_despliegue == 'C' %}
+                                <span style="font-size:75%; font-style: italic; font-weight: 900">({{task.datecompleted|date:'M j Y:i'}})</span>
+                            {% endif %}
+                        </h3>
+                    </header>
+                    <p>{{task.description}}</p>
+                    <p style="font-size: 135%; font-weight: bold"> - <i>{{task.user.username}} -</i></p>
+                </a>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</main>
+
+
+{% endblock %}
